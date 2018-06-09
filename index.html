@@ -81,6 +81,7 @@
             var recognizer = new window.SpeechRecognition();
             var transcription = document.getElementById('transcription');
             var log = document.getElementById('log');
+	    recognizer.lang = "es-ES";
 
             // Recogniser doesn't stop listening even if the user pauses
             recognizer.continuous = true;
@@ -95,30 +96,6 @@
                      transcription.textContent += event.results[i][0].transcript;
                   }
                }
-		$(function() {
-			var params = {
-	        	    // Request parameters
-		        };
-      
-	        $.ajax({
-	            url: "https://eastus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment?" + $.param(params),
-	            beforeSend: function(xhrObj){
-        	        // Request headers
-                	xhrObj.setRequestHeader("Content-Type","application/json");
-	                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","1a01ccababbd4071a7c3ff563f61ff3e");
-        	    },
-	            type: "POST",
-	            // Request body
-	        data: "{'documents': [{'language': 'es', 'id': '1', 'text': '" + transcription.value + "'}]}",
-		        })
-	        .done(function(data) {
-		      alert(data.documents[0].score);                     
-        		})
-	        .fail(function() {
-	            //alert("error");
-        		});
-		    });
-
 
             };
             // Listen for errors
